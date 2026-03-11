@@ -5,8 +5,11 @@ description: >
   Use this skill whenever the user wants to: create architecture diagrams, model software systems,
   generate C4-style views (context, container, component, deployment), produce LikeC4 DSL code,
   describe a system and turn it into a diagram, or ask about element kinds, views, relationships,
-  or deployment nodes in LikeC4. Trigger even if the user just says "make a diagram of my system",
-  "model this architecture", "generate a C4 diagram", or "show me the containers in my app".
+  deployment nodes, trust/network boundaries, or connection detail (protocols, ports, hostnames,
+  service accounts, per-view detail levels) in LikeC4. Trigger even if the user just says
+  "make a diagram of my system", "model this architecture", "generate a C4 diagram",
+  "show me the containers in my app", "add trust boundaries", "show network zones",
+  "add connection detail", "show protocol and port on the diagram", or "different views for different audiences".
 ---
 
 # LikeC4 Skill
@@ -30,15 +33,19 @@ When a user asks you to diagram a system, follow this sequence:
 
 ### View Type Selection Guide
 
-| User intent                                          | View type          | Reference file              |
-|------------------------------------------------------|--------------------|-----------------------------|
-| "Show the big picture", "who uses what"              | System Context     | `references/context.md`     |
-| "Show containers / services / APIs"                  | Container Map      | `references/container.md`   |
-| "Show internals of one service / component breakdown"| Component View     | `references/component.md`   |
-| "Show infra, Kubernetes, cloud, environments"        | Deployment View    | `references/deployment.md`  |
-| "Sequence / flow / walk through a use case"          | Dynamic View       | `references/dynamic.md`     |
+| User intent                                               | View type           | Reference file                    |
+|-----------------------------------------------------------|---------------------|-----------------------------------|
+| "Show the big picture", "who uses what"                   | System Context      | `references/context.md`           |
+| "Show containers / services / APIs"                       | Container Map       | `references/container.md`         |
+| "Show internals of one service / component breakdown"     | Component View      | `references/component.md`         |
+| "Show infra, Kubernetes, cloud, environments"             | Deployment View     | `references/deployment.md`        |
+| "Sequence / flow / walk through a use case"               | Dynamic View        | `references/dynamic.md`           |
+| "Add trust boundaries", "show network zones / segments",  | Trust Boundaries    | `references/trust-boundary.md`    |
+| "Add connection detail", "show protocol/port/auth",       | + Connection Detail | `references/trust-boundary.md`    |
+| "Different views for different audiences"                 |                     |                                   |
 
-> Always read the relevant reference file(s) before generating DSL. Multiple reference files may apply.
+> Always read the relevant reference file(s) before generating DSL. Multiple reference files may apply —
+> for example, a context diagram that also shows network zones needs both `context.md` AND `trust-boundary.md`.
 
 ---
 
@@ -165,8 +172,10 @@ architecture/
 
 Read these before generating DSL for the corresponding diagram type:
 
-- `references/context.md`    — System Context view (C4 Level 1)
-- `references/container.md`  — Container / Service Map view (C4 Level 2)
-- `references/component.md`  — Component internals view (C4 Level 3)
-- `references/deployment.md` — Deployment / infrastructure view
-- `references/dynamic.md`    — Dynamic / sequence / flow views
+- `references/context.md`        — System Context view (C4 Level 1)
+- `references/container.md`      — Container / Service Map view (C4 Level 2)
+- `references/component.md`      — Component internals view (C4 Level 3)
+- `references/deployment.md`     — Deployment / infrastructure view
+- `references/dynamic.md`        — Dynamic / sequence / flow views
+- `references/trust-boundary.md` — Trust / network boundary zones AND connection detail
+                                   (protocols, ports, hostnames, service accounts, per-view levels)
