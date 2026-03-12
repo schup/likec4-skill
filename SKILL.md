@@ -152,6 +152,10 @@ views {
 
 **Built-in icon sets**: `aws:`, `azure:`, `gcp:`, `tech:` — e.g. `icon aws:simple-storage-service`
 
+> ⚠️ **Icon names must exactly match the library.** Common mistakes:
+> - `azure:active-directory` does NOT exist — use `azure:entra-id-protection` or `azure:entra-managed-identities`
+> - Always verify icon names by checking `node_modules/@likec4/icons/<prefix>/` or the LikeC4 icon browser
+
 ---
 
 ## File Layout Convention

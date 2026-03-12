@@ -143,6 +143,9 @@ model {
 }
 ```
 
+> ⚠️ **Valid metadata keys**: Any identifier is valid as a metadata key (e.g., `authn`, `authz`, `host`, `flow`, `direction`, `port`, `protocol`, `serviceAccount`).  
+> **`notes` is NOT valid inside `metadata {}`** — it is a top-level element/relationship property, not a metadata attribute. Use a descriptive custom key like `description` or `comment` instead, or place `notes` at the top level of the element/relationship body.
+
 ### Metadata on elements (host, port, service account)
 
 Store per-element connection properties in `metadata`:
@@ -188,17 +191,16 @@ views {
     title 'Security Review'
     description 'Click any element or relationship for full detail: host, port, protocol, service account'
 
-    // Make cross-boundary connections visually prominent
-    style userNetwork.developer -> internalNetwork.ingressController {
+    // LikeC4 does NOT support "style A -> B {}" syntax in views.
+    // To visually emphasise specific relationships, tag them in the model and style by tag.
+    // Example — tag cross-boundary relationships in model:
+    //   userNetwork.developer -> internalNetwork.ingressController 'accesses over HTTPS' {
+    //     #crossBoundary
+    //     ...
+    //   }
+    // Then style by tag in views:
+    style element.tag = #crossBoundary {
       color red
-      line solid
-    }
-    style internalNetwork.myApp -> internalNetwork.nexusIQ {
-      color amber
-      line solid
-    }
-    style internalNetwork.myApp -> internet.entraID {
-      color indigo
       line solid
     }
   }
@@ -206,6 +208,12 @@ views {
 ```
 
 The two views differ in **visual emphasis**, not information access — metadata is always one click away.
+
+> ⚠️ **Relationship line/color styling cannot be overridden in view `style` blocks.**  
+> `line` and `color` on relationships are only valid inside `specification { relationship myKind { ... } }`.  
+> To make a security-review view visually distinct from a base view, use **element style overrides**:  
+> raise boundary zone opacity, change borders to `solid`, and dim element nodes — this draws the eye  
+> to the relationship lines, which carry their colour from the relationship kind in specification.
 
 ---
 
@@ -221,5 +229,5 @@ The two views differ in **visual emphasis**, not information access — metadata
 - [ ] `metadata` on elements holds host, port, protocol, service account, API token scope
 - [ ] `metadata` on relationships holds authn, authz, flow, direction detail
 - [ ] Security view uses `extends baseView` — never duplicates includes or base styles
-- [ ] Security view re-styles cross-boundary edges with `line solid` and a distinct `color`
+- [ ] Security view re-styles cross-boundary edges with `line solid` and a distinct `color` — style by **tag** (e.g. `style element.tag = #crossBoundary { ... }`), NOT with `style A -> B {}` syntax (invalid DSL)
 - [ ] Do NOT use `notation` in `style` blocks to surface per-element detail — it only sets legend text
