@@ -168,6 +168,50 @@ architecture/
 
 ---
 
+## Validating the Diagram
+
+After generating or editing `.c4` / `.likec4` files, always validate the model before presenting it to the user:
+
+```bash
+likec4 validate [path]
+```
+
+- `[path]` is the directory containing your `.c4` files (defaults to current directory if omitted).
+- A clean run prints no errors and exits with code 0.
+- **Fix all reported errors before proceeding.** Common issues: missing element references, duplicate IDs, syntax errors, undefined relationship kinds.
+- Run validate after every non-trivial edit, not just at the end.
+
+Example:
+```bash
+likec4 validate ./architecture
+```
+
+---
+
+## Previewing the Diagram
+
+To let the user interactively preview the rendered diagram in a browser:
+
+```bash
+likec4 start [path]          # aliases: serve, dev
+```
+
+- Starts a local dev server with hot-reload — changes to `.c4` files are reflected instantly.
+- `[path]` is the directory containing your `.c4` files (defaults to current directory).
+- Opens at `http://localhost:5173` by default (port may vary — check the terminal output).
+- Tell the user to open that URL in their browser to navigate and inspect all views.
+
+For a production-quality static preview (no hot-reload):
+
+```bash
+likec4 build [path]          # build the static site
+likec4 preview [path]        # serve the built site locally
+```
+
+Use `likec4 start` during iterative development; use `build` + `preview` to verify the final output before sharing.
+
+---
+
 ## Reference Files
 
 Read these before generating DSL for the corresponding diagram type:
