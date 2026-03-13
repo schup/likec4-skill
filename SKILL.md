@@ -146,9 +146,11 @@ views {
 }
 ```
 
-**Available shapes**: `rectangle` (default), `cylinder`, `queue`, `ellipse`, `person`, `hexagon`, `storage`, `browser`, `mobile`, `component`
+**Available shapes**: `rectangle` (default), `cylinder`, `queue`, `ellipse`, `person`, `storage`, `browser`, `mobile`, `component`
+> ⚠️ `hexagon` is **not** a valid shape — use `component` for transformer/processor-style elements instead.
 
-**Built-in colors**: `primary`, `secondary`, `muted`, `slate`, `red`, `green`, `amber`, `blue`, `indigo`, `sky`, `teal`
+**Built-in colors**: `primary`, `secondary`, `muted`, `slate`, `red`, `green`, `amber`, `blue`, `indigo`, `sky`
+> ⚠️ `teal` is **not** a valid built-in color — use `secondary` or `sky` instead.
 
 **Built-in icon sets**: `aws:`, `azure:`, `gcp:`, `tech:` — e.g. `icon aws:simple-storage-service`
 
